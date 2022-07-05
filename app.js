@@ -6,6 +6,9 @@ let { readFileSync } = require('fs')
 const axios = require('axios').default
 
 const PORT = process.env.PORT || 4000
+if (!process.env.TMDB_API_KEY) {
+    throw new Error('TMDB_API_KEY Not Provided!')
+}
 const api_key = process.env.TMDB_API_KEY
 const API_URL = 'https://api.themoviedb.org/3'
 
@@ -46,4 +49,4 @@ let rootValue = {
 let app = express()
 app.use('/', graphqlHTTP({ schema, rootValue, graphiql: true }))
 
-app.listen(PORT)
+app.listen(PORT, () => console.log('http://localhost:' + PORT))
